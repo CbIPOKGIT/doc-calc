@@ -7,10 +7,15 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@tailwindcss/postcss7-compat": "^2.0.2",
+    "autoprefixer": "^9",
+    "postcss": "^7",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",
     "vue": "^2.6.11"
   },
   "devDependencies": {
     "@vue/cli-service": "~4.5.0",
+    "vue-cli-plugin-tailwind": "^2.0.6",
     "vue-template-compiler": "^2.6.11"
   },
   "browserslist": [
