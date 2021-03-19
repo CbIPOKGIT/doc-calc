@@ -1,30 +1,32 @@
 <template>
-<div class="block w-full max-w-screen-lg p-3">
-    <axis-data v-model="axisData" :rules="rules" />
+<div class="block w-full max-w-screen-xl p-3">
+    <div class="no-print-1">
+        <axis-data v-model="axisData" :rules="rules" />
 
-    <hr class="my-3">
+        <hr class="my-3">
 
-    <dimension-data v-model="dimensionData" />
+        <dimension-data v-model="dimensionData" />
 
-    <hr class="my-3">
+        <hr class="my-3">
 
-    <div class="grid grid-cols-2 gap-3">
-        <div class="col-span-1">
-            <label for="cargoWeight">Вес груза</label>
-            <input type="number" name="cargoWeight" v-model.number="cargoWeight"
-                class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 w-full rounded-md sm:text-sm border-gray-300 border-2 p-1"
-            >
+        <div class="grid grid-cols-2 gap-3">
+            <div class="col-span-1">
+                <label for="cargoWeight">Вес груза</label>
+                <input type="number" name="cargoWeight" v-model.number="cargoWeight"
+                    class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 w-full rounded-md sm:text-sm border-gray-300 border-2 p-1"
+                >
+            </div>
+
+            <div class="col-span-1">
+                <label for="distance">Расстояние</label>
+                <input type="number" name="distance" v-model.number="distance"
+                    class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 w-full rounded-md sm:text-sm border-gray-300 border-2 p-1"
+                >
+            </div>
         </div>
 
-        <div class="col-span-1">
-            <label for="distance">Расстояние</label>
-            <input type="number" name="distance" v-model.number="distance"
-                class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 w-full rounded-md sm:text-sm border-gray-300 border-2 p-1"
-            >
-        </div>
+        <hr class="my-3">
     </div>
-
-    <hr class="my-3">
 
     <calculation 
         :rules="rules"
@@ -50,11 +52,20 @@ export default {
             type: Object,
             default: () => ({
                 permissibleLoads: {
-                    1: 11,
-                    2: 8,
-                    3: 7.33
+                    1: {
+                        title: "Одиночная ось",
+                        weight: 11
+                    },
+                    2: {
+                        title: "Сдвоенная ось",
+                        weight: 16
+                    },
+                    3: {
+                        title: "Строенная ось",
+                        weight: 23
+                    }
                 },
-                axisTypeDiff: 3,
+                axisTypeDiff: 2.5,
 
                 cargoWeightExcess: {
                     overLimitStep: 10,
@@ -89,32 +100,32 @@ export default {
                 },
 
                 dimensionExcess: 0.3,
-
-                debug: true
             })
         }
     },
 
     data() {
         return {
-            axisData: {
-                spacings: [],
-                weight: [],
-                permissible_weight: []
-            },
+            axisData: [],
 
             dimensionData: {
-                max: {
-                    widht: 0,
-                    height: 0,
-                    length: 0,
+                length: {
+                    title: "Длинна",
+                    max: 0,
+                    has: 0
                 },
-                has: {
-                    width: 0,
-                    height: 0,
-                    length: 0,
+                width: {
+                    title: "Ширина",
+                    max: 0,
+                    has: 0
+                },
+                height: {
+                    title: "Высота",
+                    max: 0,
+                    has: 0
                 },
             },
+
             cargoWeight: 0,
             distance: 0
         }
@@ -130,3 +141,19 @@ export default {
     },
 }
 </script>
+
+<style>
+    .print-only{
+        display: none;
+    }
+
+    @media print {
+        .no-print {
+            display: none;
+        }
+
+        .print-only{
+            display: block;
+        }
+}
+</style>
